@@ -1,11 +1,14 @@
 package com.example.guillaume2.pdr;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.pm.PackageManager;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -45,6 +48,20 @@ public class StepMonitor extends Activity implements SensorEventListener {
                 m_Mapview.move(azimuth,10f);
             }
         });
+
+
+        // check if device supports step_detector
+
+        Context context = this;
+        PackageManager packageManager = context.getPackageManager();
+
+        if (packageManager.hasSystemFeature(PackageManager.FEATURE_SENSOR_STEP_DETECTOR)) {
+            //yes
+            Log.i("sensor", "This device has step_detector!");
+        }else{
+            //no
+            Log.i("sensor", "This device has no step_detector!");
+        }
 
     }
     protected void onResume() {
